@@ -1,12 +1,10 @@
+import React from 'react';
 export const ListOfContacts = ({ contacts }) => {
-  {
-    contacts.map(contact => {
-      return (
-        <ul>
-          contacts
-          <li key={contact.id}>{contact.name}</li>
-        </ul>
-      );
-    });
-  }
+  return (
+    <ul>
+      {contacts.map(contact => {
+        <li key={contact.id}>{contact.name}</li>;
+      })}
+    </ul>
+  );
 };
