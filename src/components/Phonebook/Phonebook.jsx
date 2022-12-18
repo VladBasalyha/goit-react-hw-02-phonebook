@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import React, { Component } from 'react';
+const idFor = nanoid();
 export class Phonebook extends Component {
   state = {
     contacts: [],
@@ -11,9 +12,12 @@ export class Phonebook extends Component {
   };
 
   onHandleSubmit = e => {
+    const nameId = nanoid();
     e.preventDefault();
     this.props.onSubmit(this.state);
-    this.setState(prevstate => prevstate.contacts.push(this.state.name));
+    this.setState(prevstate =>
+      prevstate.contacts.push({ name: this.state.name, id: nameId })
+    );
     console.log(this.state);
     this.formReset();
   };
@@ -21,14 +25,14 @@ export class Phonebook extends Component {
     this.setState({ name: e.currentTarget.value });
   };
   render() {
-    const idFor = nanoid();
+    const { name, contacts } = this.state;
     return (
       <>
         <form onSubmit={this.onHandleSubmit}>
           <label htmlFor={idFor}>
             Name
             <input
-              value={this.state.name}
+              value={name}
               onChange={this.onHandleChange}
               id={idFor}
               type="text"
@@ -40,6 +44,11 @@ export class Phonebook extends Component {
           </label>
           <button type="submit">Add contact</button>
         </form>
+        <ul>
+          {contacts.map(contact => {
+            return <li key={contact.id}>{contact.name}</li>;
+          })}
+        </ul>
       </>
     );
   }
