@@ -13,28 +13,7 @@
 	margin-left: auto;
 	width: 320px;
 }
-.input {
-	width: 100%;
-	height: 20px;
-	font-size: 20px;
-	color: black;
-	text-align: center;
-	padding: 5px;
-	border-radius: 10px;
-	border-width: 0.2px;
-	border-color: black;
-	background-color: #d1d1d1;
-	border: none;
-	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.06);
-	opacity: 0.4;
-	border-bottom: 2px solid #000;
-}
-.input:focus {
-	color: black;
-}
-.name {
-	composes: input;
-}
+
 label {
 	padding: 5px;
 	display: flex;

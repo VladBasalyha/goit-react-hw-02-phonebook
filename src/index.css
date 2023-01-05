@@ -48,3 +48,6 @@ input {
 .input:focus {
 	color: black;
 }
+.name {
+	composes: input;
+}
