@@ -24,7 +24,6 @@ export class App extends Component {
 	// filtering our contacts on input
 	changeFilter = e => {
 		this.setState({ filter: e.currentTarget.value });
-		this.props.onChange();
 	};
 	deleteContact = contactId => {
 		this.setState(prevstate => ({
@@ -42,26 +41,16 @@ export class App extends Component {
 					theme: 'dark',
 					pauseOnHover: false,
 			  })
-			: this.setState(
-					prevstate => (
+			: this.setState(prevstate => ({
+					contacts: [
+						...prevstate.contacts,
 						{
-							contacts: [
-								...prevstate.contacts,
-								{
-									name: newContact.name,
-									id: nanoid(),
-									number: newContact.number,
-								},
-							],
+							name: newContact.name,
+							id: nanoid(),
+							number: newContact.number,
 						},
-						toast.success('New contact!', {
-							position: toast.POSITION.TOP_RIGHT,
-							autoClose: 2500,
-							theme: 'dark',
-							pauseOnHover: false,
-						})
-					)
-			  );
+					],
+			  }));
 	};
 
 	render() {
@@ -71,20 +60,22 @@ export class App extends Component {
 		);
 		return (
 			<>
-				<div className={css.form}>
-					<h1>Phonebook</h1>
-					<ContactForm onSubmit={this.formSubmitHandler}></ContactForm>
+				<div className={css.phonebook}>
+					<div className={css.form}>
+						<h1>Phonebook</h1>
+						<ContactForm onSubmit={this.formSubmitHandler}></ContactForm>
+					</div>
+					<h2>Contacts</h2>
+					<FilterContacts
+						filterContacts={this.changeFilter}
+						value={filter}
+					></FilterContacts>
+					<ContactsList
+						contacts={visibleTodos}
+						onDeleteContact={this.deleteContact}
+					></ContactsList>
+					<ToastContainer />
 				</div>
-				<h2>Contacts</h2>
-				<FilterContacts
-					filterContacts={this.changeFilter}
-					value={filter}
-				></FilterContacts>
-				<ContactsList
-					contacts={visibleTodos}
-					onDeleteContact={this.deleteContact}
-				></ContactsList>
-				<ToastContainer />
 			</>
 		);
 	}
