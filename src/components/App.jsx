@@ -44,12 +44,6 @@ export class App extends Component {
 			  })
 			: this.setState(
 					prevstate => (
-						toast.success('New contact!', {
-							position: toast.POSITION.TOP_RIGHT,
-							autoClose: 2500,
-							theme: 'dark',
-							pauseOnHover: false,
-						}),
 						{
 							contacts: [
 								...prevstate.contacts,
@@ -59,7 +53,13 @@ export class App extends Component {
 									number: newContact.number,
 								},
 							],
-						}
+						},
+						toast.success('New contact!', {
+							position: toast.POSITION.TOP_RIGHT,
+							autoClose: 2500,
+							theme: 'dark',
+							pauseOnHover: false,
+						})
 					)
 			  );
 	};
