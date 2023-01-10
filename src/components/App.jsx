@@ -5,7 +5,7 @@ import { ContactForm } from './Phonebook/ContactForm';
 import { nanoid } from 'nanoid';
 import css from './Phonebook/Form/Form.module.css';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,7 +20,6 @@ export class App extends Component {
 
 		filter: '',
 	};
-
 	// filtering our contacts on input
 	changeFilter = e => {
 		this.setState({ filter: e.currentTarget.value });
@@ -30,27 +29,22 @@ export class App extends Component {
 			contacts: prevstate.contacts.filter(contact => contact.id !== contactId),
 		}));
 	};
+
 	formSubmitHandler = newContact => {
 		const contacts = this.state.contacts;
 		contacts.find(
 			contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
-		)
-			? toast.error('Such contact already exists!', {
-					position: toast.POSITION.TOP_RIGHT,
-					autoClose: 2500,
-					theme: 'dark',
-					pauseOnHover: false,
-			  })
-			: this.setState(prevstate => ({
-					contacts: [
-						...prevstate.contacts,
-						{
-							name: newContact.name,
-							id: nanoid(),
-							number: newContact.number,
-						},
-					],
-			  }));
+		) ??
+			this.setState(prevstate => ({
+				contacts: [
+					...prevstate.contacts,
+					{
+						name: newContact.name,
+						id: nanoid(),
+						number: newContact.number,
+					},
+				],
+			}));
 	};
 
 	render() {
@@ -63,7 +57,10 @@ export class App extends Component {
 				<div className={css.phonebook}>
 					<div className={css.form}>
 						<h1>Phonebook</h1>
-						<ContactForm onSubmit={this.formSubmitHandler}></ContactForm>
+						<ContactForm
+							contacts={contacts}
+							onSubmit={this.formSubmitHandler}
+						></ContactForm>
 					</div>
 					<h2>Contacts</h2>
 					<FilterContacts

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const FilterContacts = ({ filterContacts, value }) => {
 	return (
 		<label>
@@ -6,4 +8,8 @@ export const FilterContacts = ({ filterContacts, value }) => {
 			<br />
 		</label>
 	);
+};
+FilterContacts.propTypes = {
+	filterContacts: PropTypes.func.isRequired,
+	value: PropTypes.string.isRequired,
 };
